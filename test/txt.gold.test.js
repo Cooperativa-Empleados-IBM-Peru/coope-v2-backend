@@ -44,7 +44,7 @@ function check(name, fn) {
   }
 }
 
-console.log("txt.gold.test — formato delimitado (21 campos, CRLF, vacío = no tocar)\n");
+console.log("txt.gold.test — formato delimitado (22 campos, CRLF, vacío = no tocar)\n");
 
 check("build() reproduce el gold byte a byte", () => {
   const { hasErrors, report, txt } = build(rows);
@@ -54,15 +54,15 @@ check("build() reproduce el gold byte a byte", () => {
 
 check("campo vacío = no tocar (sin padding)", () => {
   const r = build([{ DOCUME: "888888", ESTCIV: "S", OFICIO: "INGENIERO" }]);
-  assert.strictEqual(r.txt, "888888;;;;;;;;;;;;;;;;;S;;INGENIERO;");
+  assert.strictEqual(r.txt, "888888;;;;;;;;;;;;;;;;;S;;INGENIERO;;");
 });
 
-check("fila tiene 21 campos (20 separadores) y usa CRLF", () => {
+check("fila tiene 22 campos (21 separadores) y usa CRLF", () => {
   const r = build([{ DOCUME: "999999" }]);
-  assert.strictEqual(r.txt.split(";").length, 21, "la fila debe tener exactamente 21 campos");
-  assert.strictEqual(r.txt, "999999;;;;;;;;;;;;;;;;;;;;");
+  assert.strictEqual(r.txt.split(";").length, 22, "la fila debe tener exactamente 22 campos");
+  assert.strictEqual(r.txt, "999999;;;;;;;;;;;;;;;;;;;;;");
   const two = build([{ DOCUME: "100000" }, { DOCUME: "100001" }]);
-  assert.strictEqual(two.txt, "100000;;;;;;;;;;;;;;;;;;;;\r\n100001;;;;;;;;;;;;;;;;;;;;");
+  assert.strictEqual(two.txt, "100000;;;;;;;;;;;;;;;;;;;;;\r\n100001;;;;;;;;;;;;;;;;;;;;;");
 });
 
 check("validación: exceso de longitud en char", () => {
@@ -73,9 +73,9 @@ check("validación: exceso de longitud en char", () => {
 });
 
 check("validación: zoned no numérico", () => {
-  const bad = build([{ DOCUME: "999999", TELCEL: "12x" }]);
+  const bad = build([{ DOCUME: "999999", CARGAM: "12x" }]);
   assert.strictEqual(bad.hasErrors, true);
-  const err = bad.report[0].errors.find((e) => e.key === "TELCEL");
+  const err = bad.report[0].errors.find((e) => e.key === "CARGAM");
   assert.ok(err && /numerico/.test(err.msg));
 });
 
@@ -131,7 +131,7 @@ check("validacion: catalogos cerrados del TXT", () => {
 check("serializacion: catalogos se normalizan antes de salir", () => {
   const r = build([{ DOCUME: "999999", ESTCIV: "c" }]);
   assert.strictEqual(r.hasErrors, false);
-  assert.strictEqual(r.txt, "999999;;;;;;;;;;;;;;;;;C;;;");
+  assert.strictEqual(r.txt, "999999;;;;;;;;;;;;;;;;;C;;;;");
 });
 
 check("readOnly: serializeRow nunca transmite identidad/nacionalidad en delta", () => {

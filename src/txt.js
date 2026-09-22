@@ -1,8 +1,9 @@
 // Delimited TXT serializer for socios data updates (track 2).
 // 22 fields per row, semicolon-delimited ("campo;campo;campo..."), UTF-8, CRLF.
 // An empty field means the value did not change (no tocar). Rows have exactly
-// 22 fields (21 separators, no trailing ";") — matches the prod loader,
-// which splits on ";" and requires exactly 22 parts (field 22 = LUGNAC).
+// 22 fields (21 separators, no trailing ";") — matches the prod loader
+// (cargadatadb2), which splits on ";" and accepts 21 or 22 parts
+// (field 22 = LUGNAC, que descarta al construir el modelo).
 
 const CATALOGS = {
   TIPDID: new Set(["1"]),
