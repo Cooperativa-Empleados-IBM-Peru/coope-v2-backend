@@ -443,7 +443,7 @@ app.post("/api/socios/txt", requireAdmin, async (req, res) => {
     filename,
     recordCount: rows.length,
     status: "EXPORTED",
-    createdBy: req.user?.username || "admin",
+    createdBy: (req.admin && req.admin.user) || "admin",
     txt: result.txt  // Store the TXT content with the batch
   });
 
