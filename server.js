@@ -375,7 +375,17 @@ app.put("/api/socios/:docume", requireSocio, async (req, res) => {
   if (docume !== String(req.socio.docume).trim()) {
     return res.status(403).json({ error: "Solo puedes editar tu propio perfil." });
   }
-  const existing = await store.getSocio(docume);
+  // R8: diff against the authoritative read (db2 + overlay), not the raw mirror.
+  // The mirror may be stale after an S400 load; previousValue must reflect db2.
+  // If db2 is briefly unavailable, fall back to the mirror so the socio can still save.
+  let existing = null;
+  try {
+    const read = await reads.readSocio(store, docume);
+    existing = read.socio || null;
+  } catch (e) {
+    console.error("[PUT socio] db2 read failed, falling back to mirror:", e.message);
+    existing = await store.getSocio(docume);
+  }
   const base = existing || { DOCUME: docume };
   const patch = pickSocioFields(req.body || {});
   const next = { ...base, ...patch, DOCUME: docume };
