@@ -10,15 +10,15 @@
     "hash-password": "node src/hash-password.js"
   },
   "dependencies": {
-    "@ibm-cloud/cloudant": "^0.12.23",
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "ibm_db": "^4.0.1",
-    "jose": "^5.9.0",
-    "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^9.0.6"
+    "@ibm-cloud/cloudant": "^0.12.27",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "ibm_db": "^4.1.0",
+    "jose": "^6.2.17",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^10.4.0"
   }
 }
