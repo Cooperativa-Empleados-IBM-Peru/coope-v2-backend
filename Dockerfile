@@ -5,7 +5,7 @@ FROM registry.access.redhat.com/ubi10/nodejs-22:latest
 USER root
 RUN dnf upgrade -y --refresh --nodocs && \
     dnf install -y --setopt=install_weak_deps=0 --nodocs \
-        gcc-c++ make openssl openssl-devel bzip2-devel python3 libxml2 && \
+        gcc-c++ make openssl openssl-devel bzip2-devel python3 libxml2 libxcrypt-compat && \
     dnf clean all
 
 # Switch back to the non-root default user of the UBI Node.js image
