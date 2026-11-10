@@ -1,3 +1,9 @@
 node_modules
 .env
+.env.*
 data.json
+test
+scripts
+.github
+*.md
+.git
