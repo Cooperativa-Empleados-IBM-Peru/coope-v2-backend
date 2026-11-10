@@ -16,17 +16,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Example region: us-south.
-  # Change both IBM_REGION and ICR_HOST together for another region.
-  IBM_REGION: us-south
-  ICR_HOST: uk.icr.io
-
-  IBM_RESOURCE_GROUP: Default
-  CE_PROJECT: coop-backend
-  CE_APP_NAME: coop-api
-
-  ICR_NAMESPACE: cr-api-v2
-  IMAGE_NAME: coope-v2-api
+  IBM_REGION: ${{ vars.IBM_REGION }}
+  ICR_HOST: ${{ vars.ICR_HOST }}
+  IBM_RESOURCE_GROUP: ${{ vars.IBM_RESOURCE_GROUP }}
+  CE_PROJECT: ${{ vars.CE_PROJECT }}
+  CE_APP_NAME: ${{ vars.CE_APP_NAME }}
+  ICR_NAMESPACE: ${{ vars.ICR_NAMESPACE }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
 
 jobs:
   build-push-deploy:
@@ -60,7 +57,7 @@ jobs:
         with:
           registry: ${{ env.ICR_HOST }}
           username: iamapikey
-          password: ${{ secrets.IBM_CLOUD_API_KEY }}
+          password: ${{ env.IBM_CLOUD_API_KEY }}
 
       # This build happens on the GitHub-hosted runner, not in Code Engine.
       - name: Build and push image to ICR
@@ -80,7 +77,7 @@ jobs:
         with:
           api_key: ${{ secrets.IBM_CLOUD_API_KEY }}
           region: ${{ env.IBM_REGION }}
-          resource_group: ${{ env.IBM_RESOURCE_GROUP }}
+          group: ${{ env.IBM_RESOURCE_GROUP }}
           plugins: 'code-engine'
 
       - name: Update Code Engine application
