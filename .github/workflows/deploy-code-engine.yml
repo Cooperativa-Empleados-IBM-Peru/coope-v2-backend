@@ -107,7 +107,7 @@ jobs:
             --max-scale 1 \
             --min-scale 1 \
             --cpu 0.125 \
-            --memory 0.25G
+            --memory 0.25G \
             --env-from-configmap DB2_=db2-configmap \
             --env-from-secret DB2_=db2-secret \
             --env-from-configmap coope-api-configmap \
