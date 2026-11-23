@@ -2,14 +2,14 @@
 // Reconcile DOCUME gap: identify DOCUME codes in José's extract that don't exist in COOPESOCIOS.
 // Usage: node scripts/reconcile-docume-gap.js <path-to-extract-file>
 // Extract file format: semicolon-delimited, 22 fields, first field = DOCUME
-// Requires env vars: DB2_HOST, DB2_PORT, DB2_USER, DB2_PASSWORD, DB2_DATABASE, DB2_SCHEMA
+// Requires env vars: DB2_HOST, DB2_PORT, DB2_USERNAME, DB2_PASSWORD, DB2_DATABASE, DB2_SCHEMA
 
 require("dotenv").config();
 const ibmdb = require("ibm_db");
 const fs = require("fs");
 const path = require("path");
 
-const connStr = `DATABASE=${process.env.DB2_DATABASE};HOSTNAME=${process.env.DB2_HOST};PORT=${process.env.DB2_PORT};PROTOCOL=TCPIP;UID=${process.env.DB2_USER};PWD=${process.env.DB2_PASSWORD};SCHEMA=${process.env.DB2_SCHEMA};Security=SSL;`;
+const connStr = `DATABASE=${process.env.DB2_DATABASE};HOSTNAME=${process.env.DB2_HOST};PORT=${process.env.DB2_PORT};PROTOCOL=TCPIP;UID=${process.env.DB2_USERNAME};PWD=${process.env.DB2_PASSWORD};SCHEMA=${process.env.DB2_SCHEMA};Security=SSL;`;
 
 async function run() {
   const extractPath = process.argv[2];

@@ -21,8 +21,10 @@ env:
   IBM_RESOURCE_GROUP: ${{ vars.IBM_RESOURCE_GROUP }}
   CE_PROJECT: ${{ vars.CE_PROJECT }}
   CE_APP_NAME: ${{ vars.CE_APP_NAME }}
+  REG_SECRET: ${{ vars.REG_SECRET }}
   ICR_NAMESPACE: ${{ vars.ICR_NAMESPACE }}
   IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  LISTENING_PORT: ${{ vars.LISTENING_PORT }}
   IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_API_KEY }}
 
 jobs:
@@ -99,6 +101,17 @@ jobs:
 
           ibmcloud ce app update \
             --name "${CE_APP_NAME}" \
-            --image "${DEPLOY_IMAGE}"
+            --image "${DEPLOY_IMAGE}" \
+            --registry-secret "${REG_SECRET}" \
+            --port "${LISTENING_PORT}" \
+            --max-scale 1 \
+            --min-scale 1 \
+            --cpu 0.125 \
+            --memory 0.25G
+            --env-from-configmap DB2_=db2-configmap \
+            --env-from-secret DB2_=db2-secret \
+            --env-from-configmap coope-api-configmap \
+            --env-from-secret coope-api-secret \
+            --env IS_LOCAL=false
 
           ibmcloud ce app get --name "${CE_APP_NAME}"

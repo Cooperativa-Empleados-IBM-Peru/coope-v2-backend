@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // Fase 0: validar cobertura y unicidad de NOMBC2 (correo) en db2.
 // Ejecutar: node scripts/phase0-nombc2-check.js
-// Requiere env vars: DB2_HOST, DB2_PORT, DB2_USER, DB2_PASSWORD, DB2_DATABASE, DB2_SCHEMA
+// Requiere env vars: DB2_HOST, DB2_PORT, DB2_USERNAME, DB2_PASSWORD, DB2_DATABASE, DB2_SCHEMA
 // ⚠️ NUNCA hardcodear la pwd — usar process.env o secret de CE.
 
 require("dotenv").config();
 const ibmdb = require("ibm_db");
 
-const connStr = `DATABASE=${process.env.DB2_DATABASE};HOSTNAME=${process.env.DB2_HOST};PORT=${process.env.DB2_PORT};PROTOCOL=TCPIP;UID=${process.env.DB2_USER};PWD=${process.env.DB2_PASSWORD};SCHEMA=${process.env.DB2_SCHEMA};Security=SSL;`;
+const connStr = `DATABASE=${process.env.DB2_DATABASE};HOSTNAME=${process.env.DB2_HOST};PORT=${process.env.DB2_PORT};PROTOCOL=TCPIP;UID=${process.env.DB2_USERNAME};PWD=${process.env.DB2_PASSWORD};SCHEMA=${process.env.DB2_SCHEMA};Security=SSL;`;
 
 async function run() {
   if (!process.env.DB2_PASSWORD) {
