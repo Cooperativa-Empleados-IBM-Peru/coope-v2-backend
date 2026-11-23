@@ -37,7 +37,7 @@ const STATE_SECRET = process.env.STATE_SECRET || "";
 const DB2_CONN_STR = process.env.DB2_CONNECTION_STRING || "";
 const DB2_HOST = process.env.DB2_HOST || "";
 const DB2_PORT = process.env.DB2_PORT || "30426";
-const DB2_USER = process.env.DB2_USER || "";
+const DB2_USERNAME = process.env.DB2_USERNAME || "";
 const DB2_PASSWORD = process.env.DB2_PASSWORD || "";
 const DB2_DATABASE = process.env.DB2_DATABASE || "bludb";
 
@@ -47,8 +47,8 @@ function getDb2Conn() {
   if (_db2Conn) return _db2Conn;
 
   const connStr = DB2_CONN_STR || (
-    DB2_HOST && DB2_USER
-      ? `DATABASE=${DB2_DATABASE};HOSTNAME=${DB2_HOST};PORT=${DB2_PORT};PROTOCOL=TCPIP;UID=${DB2_USER};PWD=${DB2_PASSWORD};Security=SSL;`
+    DB2_HOST && DB2_USERNAME
+      ? `DATABASE=${DB2_DATABASE};HOSTNAME=${DB2_HOST};PORT=${DB2_PORT};PROTOCOL=TCPIP;UID=${DB2_USERNAME};PWD=${DB2_PASSWORD};Security=SSL;`
       : ""
   );
 
